@@ -2,34 +2,31 @@ from collections import deque
 import requests
 from bs4 import BeautifulSoup
 
-#I will need a wikiPage object to store the info for each page I visit
 class wikiPage:
     def __init__(self, url, linksAway, path):
         self.url = url
         self.linksAway = linksAway
         self.path = path
 
-#This function will create the final text once a match is found
+#This function will create the final text report once a match is found
 def generateReport(urlMatch: wikiPage, targetTerm:str, soup: BeautifulSoup):
         report = "\nFound!\n" + "\nURL: "+ str(urlMatch.url) +"\nPath: " + " -> ".join(urlMatch.path) +"\nLinks Away: " + str(urlMatch.linksAway)
         # Find all text elements in the current text that contain the targetTerm
         text_elements = soup.find_all(string=lambda text: text and targetTerm in text)
-        # Finding the line containing the match for the final report
         for text_element in text_elements:
             lines = text_element.split('\n')
             for line in lines:
                 if targetTerm in line:
                     report += "\nLine with match:\n" + line.strip() +"\n"
-        #Return the report sting so I can use it in the GUI
+
         return report
 
 
 def qScrape(startignUrl: str, targetTerm: str):
-    #I need to keep track of all visited URLs
+    #I need to keep track of all visited URLs to avoid infinite loops
     visitedURL = set()
-    #Store the report as a string (only 1 for this scrape method)
+    #Creating a queue and adding the first page
     firstPage = wikiPage(startignUrl, 0, [startignUrl])
-    #I will store the pages in a queue and add the first page to it
     pageQueue = deque()
     pageQueue.append(firstPage)
 
@@ -38,7 +35,6 @@ def qScrape(startignUrl: str, targetTerm: str):
         currPage = pageQueue.popleft()
         # Sending an HTTP GET request to the current URL
         response = requests.get(currPage.url)
-        # Checking that the request was successful (status code 200)
         if response.status_code != 200:
             print('Failed to retrieve the page, Error Code:', response.status_code)
 
@@ -78,8 +74,7 @@ def qScrape(startignUrl: str, targetTerm: str):
     print("No luck")
 
   
-
 #Test
-# qScrape('https://en.wikipedia.org/wiki/Michael_Scott_(The_Office)', 'trailer park')
+qScrape('https://en.wikipedia.org/wiki/LeBron_James', 'NBA')
 
 
