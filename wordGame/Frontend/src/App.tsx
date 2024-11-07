@@ -66,7 +66,7 @@ const App = () => {
 
   //Effect to flip back reset to false after a delay
   useEffect(() => {
-    const timer = setTimeout(() => setResetChat(false), 500);
+    const timer = setTimeout(() => setResetChat(false), 100);
     return () => clearTimeout(timer);
   }, [resetChat]);
 
