@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
 
 //Methods borrowed from openAI documentation
 const getGptMessage = async (message: string) => {
@@ -24,8 +25,19 @@ const getGptMessage = async (message: string) => {
   }
 };
 
-function ChatDisplayComponent({ inputText }: any) {
+function ChatDisplayComponent({
+  inputText,
+  reset,
+}: {
+  inputText: string;
+  reset: boolean;
+}) {
   const [response, setResponse] = useState("");
+
+  //Effect to reset the chat when reset changed
+  useEffect(() => {
+    setResponse("");
+  }, [reset]);
 
   const handleSendMessage = async () => {
     if (inputText.trim()) {
@@ -39,11 +51,19 @@ function ChatDisplayComponent({ inputText }: any) {
   return (
     <div>
       <Button
-        sx={{ backgroundColor: "#6200ea" }}
+        sx={{
+          background: "linear-gradient(45deg, #6200ea, #3700b3)",
+          fontWeight: "bold",
+          color: "white",
+          padding: "8px 16px",
+          "&:hover": {
+            background: "linear-gradient(45deg, #3700b3, #6200ea)",
+          },
+        }}
         variant="contained"
         onClick={handleSendMessage}
       >
-        Get AI Help
+        Get AI Help&nbsp;<TipsAndUpdatesIcon></TipsAndUpdatesIcon>{" "}
       </Button>
       {response && (
         <div>

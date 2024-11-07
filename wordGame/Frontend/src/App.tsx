@@ -3,6 +3,7 @@ import "./App.css";
 import { Box, Button, Card, Typography } from "@mui/material";
 import GenerateWord from "./GenerateWord";
 import ChatComponent from "./gptInterface";
+import AddIcon from "@mui/icons-material/Add";
 
 const App = () => {
   //State variables for the current word, correct guess, and results of the previous guess
@@ -12,6 +13,8 @@ const App = () => {
   // For the results, 0 == gray, 1 == yellow, 2 == green
   const [prevResults, setPrevResults] = useState<number[][]>([[]]);
   const [prevGuesses, setPrevGuesses] = useState<string[]>([]);
+  //State to track when I should reset the chat
+  const [resetChat, setResetChat] = useState<boolean>(false);
 
   //Keyboard listener to update the current guess when the user clicks certain keys
   const handleTyping = (event: KeyboardEvent) => {
@@ -53,12 +56,19 @@ const App = () => {
     setGuess("");
     setPrevResults([[]]);
     setPrevGuesses([]);
+    setResetChat(true);
   };
 
   const handleNewGame = () => {
     handleReset();
     setCorrectWord(GenerateWord());
   };
+
+  //Effect to flip back reset to false after a delay
+  useEffect(() => {
+    const timer = setTimeout(() => setResetChat(false), 500);
+    return () => clearTimeout(timer);
+  }, [resetChat]);
 
   return (
     <>
@@ -76,7 +86,14 @@ const App = () => {
         >
           <Button
             variant="contained"
-            sx={{ backgroundColor: "#5A5A5A" }}
+            sx={{
+              background: "linear-gradient(45deg, #5A5A5A, #2C3539)",
+              color: "white",
+              fontWeight: "bold",
+              "&:hover": {
+                background: "linear-gradient(45deg, #2C3539, #5A5A5A)",
+              },
+            }}
             onClick={() => {
               handleGuess();
             }}
@@ -85,17 +102,31 @@ const App = () => {
           </Button>
           <Button
             variant="contained"
-            sx={{ backgroundColor: "#2C3539" }}
+            sx={{
+              background: "linear-gradient(45deg, #5A5A5A, #2C3539)",
+              color: "white",
+              fontWeight: "bold",
+              "&:hover": {
+                background: "linear-gradient(45deg, #2C3539, #5A5A5A)",
+              },
+            }}
             onClick={() => handleReset()}
           >
             Reset
           </Button>
           <Button
             variant="contained"
-            sx={{ backgroundColor: "#5A5A5A" }}
+            sx={{
+              background: "linear-gradient(45deg, #5A5A5A, #2C3539)",
+              color: "white",
+              fontWeight: "bold",
+              "&:hover": {
+                background: "linear-gradient(45deg, #2C3539, #5A5A5A)",
+              },
+            }}
             onClick={() => handleNewGame()}
           >
-            New Game
+            New Game <AddIcon></AddIcon>
           </Button>
         </Box>
         {/* Current Guess Display */}
@@ -113,6 +144,7 @@ const App = () => {
                   height: 30,
                   width: 50,
                   textAlign: "center",
+                  "&:hover": { backgroundColor: "#D7D7D7" }, // Darken on hover
                 }}
                 key={index}
               >
@@ -122,7 +154,10 @@ const App = () => {
           </Box>
         </Box>
         {/* AI Chat Component */}
-        <ChatComponent inputText={correctWord}></ChatComponent>
+        <ChatComponent
+          reset={resetChat}
+          inputText={correctWord}
+        ></ChatComponent>
         {/* History + Results Section */}
         <Box display={"flex"} flexDirection={"column"} gap={2} marginTop={5}>
           {prevResults.map((prevResult, resultIndex) => (
