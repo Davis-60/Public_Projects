@@ -75,6 +75,6 @@ def qScrape(startignUrl: str, targetTerm: str):
 
   
 #Test
-qScrape('https://en.wikipedia.org/wiki/LeBron_James', 'NBA')
+# qScrape('https://en.wikipedia.org/wiki/LeBron_James', 'NBA')
 
 
