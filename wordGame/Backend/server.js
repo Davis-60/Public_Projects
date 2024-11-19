@@ -57,6 +57,11 @@ app.get("/description", (req, res) => {
   );
 });
 
+app.get("/", (req, res) => {
+  console.log("Somone requested a description");
+  res.send("This backend server was set up by Davis Featherstone.");
+});
+
 //Fun routes to increment a counter and return the result
 let myCount = 0;
 

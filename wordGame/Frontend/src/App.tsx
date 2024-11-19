@@ -38,15 +38,39 @@ const App = () => {
 
   //Handlers for the top buttons
   const handleGuess = () => {
-    const newResults = guess.split("").map((letter, index) => {
-      if (correctWord[index] == letter) {
+    //Map to check the number of times each letter appears in the answer
+    const wordMap = new Map();
+    for (let i = 0; i < 5; i++) {
+      wordMap.set(correctWord[i], (wordMap.get(correctWord[i]) || 0) + 1);
+      console.log(wordMap);
+    }
+    //First I will check for letters in the correct position
+    const greenLetters = guess.split("").map((letter, index) => {
+      if (correctWord[index] === letter) {
+        wordMap.set(letter, wordMap.get(letter) - 1);
         return 2;
-      } else if (correctWord.includes(letter)) {
+      } else {
+        return 0;
+      }
+    });
+
+    //Now to check for lettters in the incorect position
+    const yellowLetters = guess.split("").map((letter, index) => {
+      if (
+        correctWord[index] != letter &&
+        correctWord.includes(letter) &&
+        wordMap.get(letter) != 0
+      ) {
+        wordMap.set(letter, wordMap.get(letter) - 1);
         return 1;
       } else {
         return 0;
       }
     });
+    const newResults = [0, 0, 0, 0, 0];
+    for (let i = 0; i < 5; i++) {
+      newResults[i] = greenLetters[i] + yellowLetters[i];
+    }
     //Adding the new results and guess to index 0 of the history arrays
     setPrevResults([newResults, ...prevResults]);
     setPrevGuesses([guess, ...prevGuesses]);
