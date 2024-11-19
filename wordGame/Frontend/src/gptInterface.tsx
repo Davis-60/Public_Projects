@@ -68,7 +68,7 @@ function ChatDisplayComponent({
       {response && (
         <div>
           <h3>AI Hint:</h3>
-          <p>{response}</p>
+          <p style={{ fontWeight: "bold" }}>{response}</p>
         </div>
       )}
     </div>
