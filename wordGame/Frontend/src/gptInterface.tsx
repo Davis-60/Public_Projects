@@ -52,12 +52,12 @@ function ChatDisplayComponent({
     <div>
       <Button
         sx={{
-          background: "linear-gradient(45deg, #6200ea, #3700b3)",
+          background: "linear-gradient(45deg, #8B5DFF, #563A9C)",
           fontWeight: "bold",
           color: "white",
           padding: "8px 16px",
           "&:hover": {
-            background: "linear-gradient(45deg, #3700b3, #6200ea)",
+            background: "linear-gradient(45deg, #563A9C, #8B5DFF)",
           },
         }}
         variant="contained"

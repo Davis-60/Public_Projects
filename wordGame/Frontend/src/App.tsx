@@ -4,11 +4,16 @@ import { Box, Button, Card, Typography } from "@mui/material";
 import GenerateWord from "./GenerateWord";
 import ChatComponent from "./gptInterface";
 import AddIcon from "@mui/icons-material/Add";
+import StatsDisplay from "./StatsDisplay";
 
 const App = () => {
   //State variables for the current word, correct guess, and results of the previous guess
   const [correctWord, setCorrectWord] = useState(GenerateWord());
   const [guess, setGuess] = useState<string>("");
+  //State variables to track streaks
+  const [attemps, setAttempts] = useState<number>(0);
+  const [wins, setWins] = useState<number>(0);
+  const [showStats, setShowStats] = useState<boolean>(false);
 
   // For the results, 0 == gray, 1 == yellow, 2 == green
   const [prevResults, setPrevResults] = useState<number[][]>([[]]);
@@ -74,6 +79,12 @@ const App = () => {
     //Adding the new results and guess to index 0 of the history arrays
     setPrevResults([newResults, ...prevResults]);
     setPrevGuesses([guess, ...prevGuesses]);
+    //Updating the win counter (need to stringify to proparly make this comparison)
+    JSON.stringify(newResults) === JSON.stringify([2, 2, 2, 2, 2])
+      ? setWins(wins + 1)
+      : null;
+    //Updating the attempt counter
+    setAttempts(attemps + 1);
   };
 
   const handleReset = () => {
@@ -81,6 +92,7 @@ const App = () => {
     setPrevResults([[]]);
     setPrevGuesses([]);
     setResetChat(true);
+    setAttempts(0);
   };
 
   const handleNewGame = () => {
@@ -152,7 +164,25 @@ const App = () => {
           >
             New Game <AddIcon></AddIcon>
           </Button>
+          <Button
+            variant="contained"
+            sx={{
+              background: "linear-gradient(45deg, #563A9C, #2C3539)",
+              color: "white",
+              fontWeight: "bold",
+              "&:hover": {
+                background: "linear-gradient(45deg, #2C3539, #563A9C)",
+              },
+            }}
+            onClick={() => setShowStats(!showStats)}
+          >
+            Show Stats
+          </Button>
         </Box>
+        {/*Display for the current game's stats*/}
+        {showStats && (
+          <StatsDisplay wins={wins} attempts={attemps}></StatsDisplay>
+        )}
         {/* Current Guess Display */}
         <Box
           display={"flex"}
