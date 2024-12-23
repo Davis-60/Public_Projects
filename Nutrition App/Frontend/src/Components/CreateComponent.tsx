@@ -5,7 +5,7 @@ import { Box, Button, TextField } from "@mui/material";
 
 const defaultMeal: Meal = {
   name: "",
-  date: "",
+  date: Date.now(),
   calories: 0,
   protein: 0,
   carbs: 0,

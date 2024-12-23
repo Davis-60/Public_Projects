@@ -21,7 +21,7 @@ mongoose
 //Schema for a Meal Object
 const MealSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  date: { type: Date, default: Date.now },
+  date: { type: Date, default: Date.now() },
   calories: { type: Number, required: true },
   protein: { type: Number, required: true },
   carbs: { type: Number, required: true },
@@ -49,7 +49,6 @@ app.get("/api/meals", async (req, res) => {
   //Right now the only supported filter is a limit
   //Using mongoose to query with filters
   try {
-    // const meals = await Meal.find(mongoQuery).limit(mongoQuery.limit || 0);
     const meals = await Meal.find().limit(filters.limit || 0);
     res.json({ reply: meals });
   } catch (error) {

@@ -2,7 +2,7 @@
 export interface Meal {
   name: string;
   //date shouldn't be a string but I'll figure it out
-  date: string;
+  date: number;
   calories: number;
   protein: number;
   carbs: number;
