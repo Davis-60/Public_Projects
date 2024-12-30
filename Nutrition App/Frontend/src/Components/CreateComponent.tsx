@@ -8,8 +8,7 @@ const defaultMeal: Meal = {
   date: Date.now(),
   calories: 0,
   protein: 0,
-  carbs: 0,
-  fats: 0,
+  sugar: 0,
 };
 
 //This component should hold the forms to enter a new meal and a create button
@@ -70,6 +69,14 @@ const CreateComponent = () => {
           //This name must match the name in the meal interface for the event handler to work as intended
           name="protein"
           value={mealInfo.protein}
+          onChange={handleChange}
+        />
+
+        <TextField
+          label="Sugar"
+          //This name must match the name in the meal interface for the event handler to work as intended
+          name="sugar"
+          value={mealInfo.sugar}
           onChange={handleChange}
         />
 

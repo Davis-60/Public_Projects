@@ -24,8 +24,7 @@ const MealSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now() },
   calories: { type: Number, required: true },
   protein: { type: Number, required: true },
-  carbs: { type: Number, required: true },
-  fats: { type: Number, required: true },
+  sugar: { type: Number, required: true },
 });
 
 const Meal = mongoose.model("Meal", MealSchema);

@@ -22,6 +22,7 @@ const ViewComponent = () => {
     { field: "name", headerName: "Meal Name", width: 200 },
     { field: "calories", headerName: "Calories", width: 150 },
     { field: "protien", headerName: "Protien", width: 150 },
+    { field: "sugar", headerName: "Sugar", width: 150 },
     { field: "date", headerName: "Date", width: 150 },
   ];
 
@@ -30,7 +31,7 @@ const ViewComponent = () => {
     name: meal.name,
     calories: meal.calories,
     protien: meal.protein,
-
+    sugar: meal.sugar,
     //Need to convert the date back from a number to a date object so I can make it a readable string
     date: new Date(meal.date).toDateString(),
   }));

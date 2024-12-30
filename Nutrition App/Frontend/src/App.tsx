@@ -14,7 +14,7 @@ function App() {
         <CreateComponent></CreateComponent>
         <Button
           variant={"contained"}
-          color={"primary"}
+          color={"secondary"}
           onClick={() => setShowMealGrid(!showMealGrid)}
           sx={{ fontWeight: "bold" }}
         >
