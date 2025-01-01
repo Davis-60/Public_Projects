@@ -1,28 +1,50 @@
-import { Box, Button } from "@mui/material";
 import "./App.css";
-import CreateComponent from "./Components/CreateComponent";
-import ViewComponent from "./Components/ViewComponent";
-import { useState } from "react";
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  HashRouter,
+  Link,
+} from "react-router-dom";
+
+//Importing Pages
+import HomePage from "./Pages/HomePage";
+import GraphPage from "./Pages/GraphPage";
+import { Button } from "@mui/material";
+
+//Need this to initialize Router
+Router;
 
 //Using MUI for the main styling
 function App() {
-  const [showMealGrid, setShowMealGrid] = useState<boolean>(false);
   return (
-    <>
-      <h1>Nutrition Tracker</h1>
-      <Box display="flex" flexDirection="column" alignItems="center" gap={4}>
-        <CreateComponent></CreateComponent>
+    <HashRouter basename="/">
+      <>
         <Button
-          variant={"contained"}
-          color={"secondary"}
-          onClick={() => setShowMealGrid(!showMealGrid)}
-          sx={{ fontWeight: "bold" }}
+          //component = Link integrates the react router link into the MUI Button component
+          component={Link}
+          to="/"
+          variant="contained"
+          sx={{ mx: 1 }}
         >
-          Show My Meals
+          Home
         </Button>
-        {showMealGrid && <ViewComponent></ViewComponent>}
-      </Box>
-    </>
+        <Button
+          //component = Link integrates the react router link into the MUI Button component
+          component={Link}
+          to="/GraphPage"
+          variant="contained"
+          sx={{ mx: 1 }}
+        >
+          Graphs
+        </Button>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/GraphPage" element={<GraphPage />} />
+        </Routes>
+      </>
+    </HashRouter>
   );
 }
 
