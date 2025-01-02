@@ -82,9 +82,8 @@ const CreateComponent = () => {
 
         <Button
           variant={"contained"}
-          color={"primary"}
           onClick={handleMealCreate}
-          sx={{ fontWeight: "bold" }}
+          sx={{ fontWeight: "bold", bgcolor: "#003049" }}
         >
           Log New Meal
         </Button>

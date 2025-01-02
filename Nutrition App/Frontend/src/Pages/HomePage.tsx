@@ -7,14 +7,12 @@ function HomePage() {
   const [showMealGrid, setShowMealGrid] = useState<boolean>(false);
   return (
     <>
-      <h1>Nutrition Tracker</h1>
       <Box display="flex" flexDirection="column" alignItems="center" gap={4}>
         <CreateComponent></CreateComponent>
         <Button
           variant={"contained"}
-          color={"secondary"}
           onClick={() => setShowMealGrid(!showMealGrid)}
-          sx={{ fontWeight: "bold" }}
+          sx={{ fontWeight: "bold", bgcolor: "#003049" }}
         >
           Show My Meals
         </Button>
