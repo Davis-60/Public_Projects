@@ -23,6 +23,24 @@ export const createMeal = async (mealInfo: Meal) => {
   }
 };
 
+export const deleteMeal = async (mealId: string) => {
+  try {
+    const response = await fetch(`http://localhost:5001/api/meals/${mealId}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data.reply;
+  } catch (error) {
+    console.error("Error fetching response:", error);
+    return "An error occurred while fetching the response.";
+  }
+};
+
 //Work in progress, but it works to pull all meals in the DB
 export const getMeals = async (params: any) => {
   try {
