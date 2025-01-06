@@ -9,12 +9,17 @@ import {
   Legend,
 } from "recharts";
 import { getMeals } from "../API/API";
+import { idMeal } from "../Interfaces/Interfaces";
 
 const GraphPage = () => {
   const [chartData, setChartData] = useState<[]>([]);
 
   const queryMeals = async (filter: object) => {
-    const newMeals = await getMeals(filter);
+    const myMeals = await getMeals(filter);
+    const newMeals = myMeals.map((meal: idMeal) => ({
+      ...meal,
+      calPerPro: meal.calories / meal.protein,
+    }));
     setChartData(newMeals);
   };
 
@@ -47,6 +52,16 @@ const GraphPage = () => {
         <Legend />
         <Bar dataKey="protein" fill="#003049" />
         <Bar dataKey="sugar" fill="#669bbc" />
+      </BarChart>
+
+      <h2>Calories per gram Protien </h2>
+      <BarChart width={500} height={300} data={chartData}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="calPerPro" name="Ratio" fill="#003049" />
       </BarChart>
     </>
   );

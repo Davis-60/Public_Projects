@@ -38,7 +38,6 @@ const ViewComponent = () => {
 
   return (
     <>
-      <h2>My Meals</h2>
       <DataGrid
         sx={{
           backgroundColor: "#f5f5f5",
